@@ -76,9 +76,7 @@ public class TennisGame2 implements TennisGame
 	private String normal2(String score) {
 		if (P1point>P2point && P1point < 4)
         {
-			P1res=getLiteral(P1point);
-            P2res=getLiteral(P2point);
-            score = P1res + "-" + P2res;
+            score = getLiteral(P1point) + "-" + getLiteral(P2point);
         }
 		return score;
 	}
