@@ -16,57 +16,49 @@ public class TennisGame2 implements TennisGame
 
     public String getScore(){
         String score = "";
-        if (P1point == P2point && P1point < 4)
-        {
-            if (P1point==0)
-                score = "Love";
-            if (P1point==1)
-                score = "Fifteen";
-            if (P1point==2)
-                score = "Thirty";
-            score += "-All";
-        }
-        if (P1point==P2point && P1point>=3)
-            score = "Deuce";
+        score = tie(score);
         
-        if (P1point > 0 && P2point==0)
+        score = deuces(score);
+        
+        score = normal(score);
+        score = normal1(score);
+        
+        score = normal2(score);        
+        score = normal3(score);
+        
+        score = advantage(score);
+        
+        score = win(score);
+        return score;
+    }
+
+	private String win(String score) {
+		if (P1point>=4 && P2point>=0 && (P1point-P2point)>=2)
         {
-            if (P1point==1)
-                P1res = "Fifteen";
-            if (P1point==2)
-                P1res = "Thirty";
-            if (P1point==3)
-                P1res = "Forty";
-            
-            P2res = "Love";
-            score = P1res + "-" + P2res;
+            score = "Win for player1";
         }
-        if (P2point > 0 && P1point==0)
+        if (P2point>=4 && P1point>=0 && (P2point-P1point)>=2)
         {
-            if (P2point==1)
-                P2res = "Fifteen";
-            if (P2point==2)
-                P2res = "Thirty";
-            if (P2point==3)
-                P2res = "Forty";
-            
-            P1res = "Love";
-            score = P1res + "-" + P2res;
+            score = "Win for player2";
+        }
+		return score;
+	}
+
+	private String advantage(String score) {
+		if (P1point > P2point && P2point >= 3)
+        {
+            score = "Advantage player1";
         }
         
-        if (P1point>P2point && P1point < 4)
+        if (P2point > P1point && P1point >= 3)
         {
-            if (P1point==2)
-                P1res="Thirty";
-            if (P1point==3)
-                P1res="Forty";
-            if (P2point==1)
-                P2res="Fifteen";
-            if (P2point==2)
-                P2res="Thirty";
-            score = P1res + "-" + P2res;
+            score = "Advantage player2";
         }
-        if (P2point>P1point && P2point < 4)
+		return score;
+	}
+
+	private String normal3(String score) {
+		if (P2point>P1point && P2point < 4)
         {
             if (P2point==2)
                 P2res="Thirty";
@@ -78,27 +70,75 @@ public class TennisGame2 implements TennisGame
                 P1res="Thirty";
             score = P1res + "-" + P2res;
         }
-        
-        if (P1point > P2point && P2point >= 3)
+		return score;
+	}
+
+	private String normal2(String score) {
+		if (P1point>P2point && P1point < 4)
         {
-            score = "Advantage player1";
+            if (P1point==2)
+                P1res="Thirty";
+            if (P1point==3)
+                P1res="Forty";
+            if (P2point==1)
+                P2res="Fifteen";
+            if (P2point==2)
+                P2res="Thirty";
+            score = P1res + "-" + P2res;
         }
-        
-        if (P2point > P1point && P1point >= 3)
+		return score;
+	}
+
+	private String normal1(String score) {
+		if (P2point > 0 && P1point==0)
         {
-            score = "Advantage player2";
+            
+            score = getLiteral(P1point) + "-" + getLiteral(P2point);
         }
-        
-        if (P1point>=4 && P2point>=0 && (P1point-P2point)>=2)
+		return score;
+	}
+
+	private String normal(String score) {
+		int p1point2 = P1point;
+		if (p1point2 > 0 && P2point==0)
         {
-            score = "Win for player1";
+            score = getLiteral(p1point2) + "-" + getLiteral(P2point);
         }
-        if (P2point>=4 && P1point>=0 && (P2point-P1point)>=2)
+		return score;
+	}
+
+	private String getLiteral(int p1point2) {
+		String result = "";
+		if (p1point2==0)
+		    P1res = "Love";
+		if (p1point2==1)
+		    P1res = "Fifteen";
+		if (p1point2==2)
+		    P1res = "Thirty";
+		if (p1point2==3)
+		    P1res = "Forty";
+		return result;
+	}
+
+	private String deuces(String score) {
+		if (P1point==P2point && P1point>=3)
+            score = "Deuce";
+		return score;
+	}
+
+	private String tie(String score) {
+		if (P1point == P2point && P1point < 4)
         {
-            score = "Win for player2";
+            if (P1point==0)
+                score = "Love";
+            if (P1point==1)
+                score = "Fifteen";
+            if (P1point==2)
+                score = "Thirty";
+            score += "-All";
         }
-        return score;
-    }
+		return score;
+	}
     
     public void SetP1Score(int number){
         
